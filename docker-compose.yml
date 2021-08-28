@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  appserverthread.webapi:
+    image: ${DOCKER_REGISTRY-}appserverthreadwebapi
+    build:
+      context: .
+      dockerfile: src/AppServerThread.WebApi/Dockerfile 
+
+
+  appserverthread.workers:
+    image: ${DOCKER_REGISTRY-}appserverthreadworkers
+    build:
+      context: .
+      dockerfile: src/AppServerThread.Workers/Dockerfile
+

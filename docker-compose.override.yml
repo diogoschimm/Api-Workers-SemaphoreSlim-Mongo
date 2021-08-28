@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  appserverthread.webapi:
+    container_name: webApi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "8081:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - web
+
+  appserverthread.workers: 
+    container_name: worker
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    networks:
+      - web
+    depends_on:
+      - appserverthread.webapi
+
+networks:
+  web: 
+    driver: bridge
